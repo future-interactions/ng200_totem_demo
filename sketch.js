@@ -1,8 +1,9 @@
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	// put setup code here
+background(0);
+fill(255,0,0);
 }
 
 function draw() {
-	// put drawing code here
+rect(windowWidth/2-100, windowHeight/2-100, 200,200)
 }
