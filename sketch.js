@@ -29,7 +29,7 @@ function drawContent() {
 	background(0);
 	image(bgImages[key], windowWidth/2-(bgImages[0].width *scalerPerc)/2,windowHeight/2-(bgImages[0].height*scalerPerc) / 2,(bgImages[0].width *scalerPerc),(bgImages[0].height *scalerPerc));
 	textSize(32);
-	text(words[key], 10, 30);
+	text(words[key], windowWidth/2-(bgImages[0].width *scalerPerc)/2,windowHeight/2-(bgImages[0].height*scalerPerc) / 2);
 }
 function keyTyped() {
 	drawContent(key);
