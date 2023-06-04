@@ -3,8 +3,12 @@ var stepper = 100;
 let bgImages = [];
 let words = [];
 let myFont;
-var scalerPerc = .5;
+var scalerPerc = .66;
 let logo;
+var bgCounter = 0;
+var vKey = 0;
+var swingAmount = 8;
+var overhang = 0;
 function preload() {
 	bgImages[0] = loadImage('assets/whistlejacket.png');
 	bgImages[1] = loadImage('assets/whistlejacket.png');
@@ -24,34 +28,66 @@ function setup() {
 	words[2] = 'Open';
 	words[3] = 'Closing soon';
 	textFont(myFont);
-	textSize(32);
+	textSize(48);
 	fill(255);
-	textAlign(CENTER, BASELINE);
+	textAlign(LEFT, BASELINE);
 
 }
 
 function draw() {
+	drawBgL();
+	drawTextL();
+	drawMask();
+	//drawGuides();
 }
 
 function drawBgL() {
 	background(0);
-	let x = windowWidth / 2 - (bgImages[key].width * scalerPerc) / 2;
-	let y = windowHeight / 2 - (bgImages[key].height * scalerPerc) / 2;
-	let w = bgImages[key].width * scalerPerc;
-	let h = bgImages[key].height * scalerPerc;
-	image(bgImages[key], x, y, w, h);
+	let sinSize = 400;
+	bgCounter += 0.003;
+	//let x = windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2;
+	let x = windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + (sin(bgCounter) * (bgImages[vKey].width * scalerPerc) / swingAmount);
+	let y = windowHeight / 2 - (bgImages[vKey].height * scalerPerc) / 2;
+	let w = bgImages[vKey].width * scalerPerc;
+	let h = bgImages[vKey].height * scalerPerc;
+	image(bgImages[vKey], x, y, w, h);
+	overhang = (bgImages[vKey].width * scalerPerc) / swingAmount;
+	stroke(255);
 }
 
 function drawTextL() {
-	let x = windowWidth / 2 - (logo.width * scalerPerc) / 2;
-	let y = windowHeight / 2 - (bgImages[key].height * scalerPerc) / 2.2;
+	fill(255);
+	let x = windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2;
+	let y = windowHeight / 2 - (bgImages[vKey].height * scalerPerc) / 2.2;
 	let w = logo.width * scalerPerc;
 	let h = logo.height * scalerPerc;
-	text(words[key], windowWidth / 2, windowHeight / 2);
-	image(logo,x,y,w,h);
+
+	text(words[vKey], windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2.2 + overhang, windowHeight / 2);
+	image(logo, windowWidth / 2 - (logo.width * scalerPerc) / 2, y, w, h);
 }
+
+function drawMask() {
+	noStroke();
+	fill(0);
+	rect(0, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + overhang, height);
+	rect(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc - overhang, 0, width, height);
+
+}
+
+function drawGuides() {
+	//lines inc overhang
+	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2, height)
+	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc, height);
+	//lines less overhang
+	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + overhang, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + overhang, height);
+	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc - overhang, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc - overhang, height);
+
+}
+
 function keyTyped() {
-	drawBgL(key);
-	drawTextL(key);
+	if (key>=0&key<=3){
+	vKey = key;
+}
+	//drawBgL(key);
 	return false; // prevent any default behaviour
 }
