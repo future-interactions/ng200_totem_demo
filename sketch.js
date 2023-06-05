@@ -3,7 +3,7 @@ var stepper = 100;
 let bgImages = [];
 let words = [];
 let myFont;
-var scalerPerc = .66;
+var scalerPerc = .80;
 let logo;
 var bgCounter = 0;
 var vKey = 0;
@@ -24,13 +24,15 @@ function setup() {
 	background(0);
 	fill(255, 0, 0);
 	words[0] = 'Welcome';
-	words[1] = 'Opening soon';
+	words[1] = 'Open in 23 mins';
 	words[2] = 'Open';
 	words[3] = 'Closing soon';
 	textFont(myFont);
-	textSize(48);
+	textSize(64 * scalerPerc);
+	textLeading(64 * scalerPerc);
+
 	fill(255);
-	textAlign(LEFT, BASELINE);
+	textAlign(LEFT);
 
 }
 
@@ -42,6 +44,8 @@ function draw() {
 }
 
 function drawBgL() {
+	//console.log(key);
+
 	background(0);
 	let sinSize = 400;
 	bgCounter += 0.003;
@@ -62,7 +66,7 @@ function drawTextL() {
 	let w = logo.width * scalerPerc;
 	let h = logo.height * scalerPerc;
 
-	text(words[vKey], windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2.2 + overhang, windowHeight / 2);
+	text(words[vKey], windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2.2 + overhang, windowHeight / 2 - (bgImages[vKey].height * scalerPerc) / 6, bgImages[vKey].width * scalerPerc / 2.2, bgImages[vKey].height * scalerPerc / 2.2);
 	image(logo, windowWidth / 2 - (logo.width * scalerPerc) / 2, y, w, h);
 }
 
@@ -85,9 +89,29 @@ function drawGuides() {
 }
 
 function keyTyped() {
-	if (key>=0&key<=3){
-	vKey = key;
-}
+	if (key >= 0 & key <= 3 & keyCode !== 32) {
+		vKey = key;
+	}
 	//drawBgL(key);
 	return false; // prevent any default behaviour
 }
+
+function touchStarted() {
+	if (vKey < 3) {
+		vKey++;
+	} else {
+		vKey = 0;
+	}
+	var fs = fullscreen();
+	if (!fs) {
+		fullscreen(true);
+	}
+}
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+}
+document.ontouchmove = function (event) {
+	event.preventDefault();
+};
+
+
