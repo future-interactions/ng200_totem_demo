@@ -1,19 +1,24 @@
 var vSize = 10;
 var stepper = 100;
 let bgImages = [];
+let textImages = [];
 let words = [];
 let myFont;
-var scalerPerc = .80;
+var scalerPerc = .75;
 let logo;
 var bgCounter = 0;
 var vKey = 0;
-var swingAmount = 8;
+var swingAmount = 6;
 var overhang = 0;
 function preload() {
-	bgImages[0] = loadImage('assets/whistlejacket.png');
-	bgImages[1] = loadImage('assets/whistlejacket.png');
-	bgImages[2] = loadImage('assets/sunflowers.png');
-	bgImages[3] = loadImage('assets/duchess.png');
+	bgImages[0] = loadImage('assets/whistlejacket_L.png');
+	bgImages[1] = loadImage('assets/whistlejacket_L.png');
+	bgImages[2] = loadImage('assets/sunflowers_L.png');
+	bgImages[3] = loadImage('assets/duchess_L.png');
+	textImages[0] = loadImage('assets/opening_soon_text_L.png');
+	textImages[1] = loadImage('assets/opening_soon_text_L.png');
+	textImages[2] = loadImage('assets/opening_soon_text_L.png');
+	textImages[3] = loadImage('assets/opening_soon_text_L.png');
 	myFont = loadFont('assets/DMSans-Medium.ttf');
 	logo = loadImage('assets/logo.png');
 }
@@ -24,12 +29,12 @@ function setup() {
 	background(0);
 	fill(255, 0, 0);
 	words[0] = 'Welcome';
-	words[1] = 'Open in 23 mins';
-	words[2] = 'Open';
+	words[1] = 'Welcome to \n \nthe National Gallery \n \n Free entry for all \n \nOpen in 23 mins';
+	words[2] = 'Welcome to \n \nthe National Gallery \n \n Free entry for all ';
 	words[3] = 'Closing soon';
 	textFont(myFont);
-	textSize(64 * scalerPerc);
-	textLeading(64 * scalerPerc);
+	textSize(54 * scalerPerc);
+	textLeading(62 * scalerPerc);
 
 	fill(255);
 	textAlign(LEFT);
@@ -38,8 +43,9 @@ function setup() {
 
 function draw() {
 	drawBgL();
-	drawTextL();
+	//drawTextL();
 	drawMask();
+	drawTextLayerL();
 	//drawGuides();
 }
 
@@ -66,7 +72,7 @@ function drawTextL() {
 	let w = logo.width * scalerPerc;
 	let h = logo.height * scalerPerc;
 
-	text(words[vKey], windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2.2 + overhang, windowHeight / 2 - (bgImages[vKey].height * scalerPerc) / 6, bgImages[vKey].width * scalerPerc / 2.2, bgImages[vKey].height * scalerPerc / 2.2);
+	text(words[vKey], windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2.2 + overhang, windowHeight / 2 - (bgImages[vKey].height * scalerPerc) / 6, bgImages[vKey].width * scalerPerc / 1.5, bgImages[vKey].height * scalerPerc / 1.5);
 	image(logo, windowWidth / 2 - (logo.width * scalerPerc) / 2, y, w, h);
 }
 
@@ -85,6 +91,17 @@ function drawGuides() {
 	//lines less overhang
 	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + overhang, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + overhang, height);
 	line(windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc - overhang, 0, windowWidth / 2 - (bgImages[vKey].width * scalerPerc) / 2 + bgImages[vKey].width * scalerPerc - overhang, height);
+
+}
+
+function drawTextLayerL(){
+	let x = windowWidth / 2 - 414/2;
+	let y = windowHeight / 2 - 896/2;
+	let w = 414;
+	let h = 896;
+	
+image(textImages[0],x,y,w,h);
+image(logo, windowWidth / 2 - (logo.width * scalerPerc) / 3,  windowHeight / 2 - textImages[0].height * scalerPerc/3-logo.height/0.9, logo.width*scalerPerc/1.5, logo.height*scalerPerc/1.5);
 
 }
 
